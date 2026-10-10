@@ -750,15 +750,15 @@
       "bytes": 5403,
       "sha256": "7988794fa9ad6a44cf1991c523901c62f9da05a24acdedfd8eb272950973eeb1"
     },
-    "tool/store_capture/driver.dart": {
+    "tool/store_capture/driver.dart.template": {
       "bytes": 615,
       "sha256": "c99b3de157e802f7718ce1553d67dc46b850a525699688d1953bdd6766e969a5"
     },
     "tool/store_capture/run_capture.py": {
-      "bytes": 3506,
-      "sha256": "7ec82b5839e4e8ad1ba0e165f02d8139e25cf21c0656d41cbbf033d1eccaa272"
+      "bytes": 3631,
+      "sha256": "b52fac9adadcbed24ce72aa72aee48d117809d1c0ccb34f194bdc7e27bd543ef"
     },
-    "tool/store_capture/screenshot_test.dart": {
+    "tool/store_capture/screenshot_test.dart.template": {
       "bytes": 4197,
       "sha256": "00391fa5794ddebc67de0b54c07b0763adee471d6479df5efe06dfe1bffc8304"
     },

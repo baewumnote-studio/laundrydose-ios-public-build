@@ -14,6 +14,8 @@ def capture():
     if source.exists(): raise ValueError('Capture copy already exists; inspect before retrying.')
     shutil.copytree(ROOT,source,ignore=shutil.ignore_patterns('.git','build','.dart_tool','verification'))
     run(['flutter','pub','add','dev:integration_test@{sdk: flutter}'],cwd=source)
+    for template in (source/'tool/store_capture').glob('*.dart.template'):
+        template.rename(template.with_suffix(''))
     run(['flutter','analyze','--no-pub','tool/store_capture'],cwd=source)
     inventory=json.loads(subprocess.check_output(['xcrun','simctl','list','-j','devices','available']))
     runtimes=json.loads(subprocess.check_output(['xcrun','simctl','list','-j','runtimes']))['runtimes']
