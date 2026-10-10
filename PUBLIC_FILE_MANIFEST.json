@@ -715,8 +715,8 @@
       "sha256": "2c5e2e1df9c09ae0fd0a3e3321127f13efc394fb2a4602be17ec43b475cce887"
     },
     "tool/ci/record_native_dependencies.py": {
-      "bytes": 654,
-      "sha256": "67155712ef7da7fb0a3b1c2925378df9bcfc1f1c2b597bf61a61392b0380e010"
+      "bytes": 3390,
+      "sha256": "b91cc4248b5bb0a38acc7097f504a5057560126eb305397b7f0a9d89c574077d"
     },
     "tool/ci/select_signing.py": {
       "bytes": 655,
@@ -731,8 +731,8 @@
       "sha256": "30b82d7bfbb9e68f8f4d94da0420217224263ba58c350e25c097f7806bc7611d"
     },
     "tool/ci/test_public_build_controls.py": {
-      "bytes": 6128,
-      "sha256": "ad5c3c29077dabb8ed0bcb7029513d253656b43864565d5fec9744501026f397"
+      "bytes": 7719,
+      "sha256": "204a8d0c1eb195583c4a7db39986737c714e4705ac5eb0944d3ea28157c2b072"
     },
     "tool/ci/testflight_gate.py": {
       "bytes": 1116,

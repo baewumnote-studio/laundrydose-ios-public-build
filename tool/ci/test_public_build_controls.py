@@ -1,5 +1,6 @@
 """Exercise public-run authorization and authenticated artifact encryption."""
 from pathlib import Path
+import json
 import os
 import shutil
 import subprocess
@@ -8,6 +9,33 @@ import unittest
 
 from public_build_gate import OWNER, OWNER_ID, REPOSITORY, matching_unsigned, validate, validate_environment
 from protect_artifacts import encrypt
+from record_native_dependencies import read_swift_resolutions, require_ad_sdk_evidence
+
+class NativeSdkEvidenceTests(unittest.TestCase):
+    def test_swift_packages_are_recorded_when_pods_only_contains_flutter(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            resolved=root/'ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved'
+            resolved.parent.mkdir(parents=True)
+            pins=[{'identity':'swift-package-manager-google-mobile-ads',
+                   'state':{'version':'13.1.0','revision':'sdk-fixture'}},
+                  {'identity':'swift-package-manager-google-user-messaging-platform',
+                   'state':{'version':'3.1.0','revision':'consent-fixture'}}]
+            resolved.write_text(json.dumps({'version':3,'pins':pins}))
+            packages=read_swift_resolutions(root)
+            self.assertEqual(len(packages),2)
+            self.assertEqual(packages[0]['version'],'13.1.0')
+            require_ad_sdk_evidence(packages,[])
+
+    def test_incomplete_ad_sdk_evidence_is_rejected(self):
+        with self.assertRaises(ValueError):
+            require_ad_sdk_evidence([],[{'name':'Flutter','version':'1.0'}])
+        with self.assertRaises(ValueError):
+            require_ad_sdk_evidence([],[{'name':'GoogleMobileAds','version':'fixture'}])
+
+    def test_embedded_sdk_versions_also_supply_evidence(self):
+        require_ad_sdk_evidence([], [{'name':'GoogleMobileAds','version':'13.1.0'},
+                                    {'name':'UserMessagingPlatform','version':'3.1.0'}])
 
 class PublicGateTests(unittest.TestCase):
     def test_only_manual_owner_main_in_the_exact_repository(self):
