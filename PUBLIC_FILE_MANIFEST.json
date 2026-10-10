@@ -15,8 +15,8 @@
       "sha256": "cfbe6c6b77f8fc58f0819267626117e1a767eeb1e80e2f469776e7f53174648d"
     },
     ".github/workflows/store-screenshots.yml": {
-      "bytes": 985,
-      "sha256": "f18704dcb9125a700a70c64881f07f3295eb8b354960e0b6b0ca2458d022c7b8"
+      "bytes": 1006,
+      "sha256": "376a8f8a9c16a0576d1a1bcba229536947bf458a828edf6d3589f9db556972ee"
     },
     ".gitignore": {
       "bytes": 546,
@@ -755,8 +755,8 @@
       "sha256": "c99b3de157e802f7718ce1553d67dc46b850a525699688d1953bdd6766e969a5"
     },
     "tool/store_capture/run_capture.py": {
-      "bytes": 3631,
-      "sha256": "b52fac9adadcbed24ce72aa72aee48d117809d1c0ccb34f194bdc7e27bd543ef"
+      "bytes": 5616,
+      "sha256": "ec1f45134aed84d60d1c5038592840e491c5ed9c5773a040303fabed49a75950"
     },
     "tool/store_capture/screenshot_test.dart.template": {
       "bytes": 4197,
