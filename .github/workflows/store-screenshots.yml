@@ -1,0 +1,24 @@
+name: Native Store screenshot preparation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  capture:
+    if: github.repository == 'baewumnote-studio/laundrydose-ios-public-build' && github.actor == 'baewumnote-studio' && github.ref == 'refs/heads/main' && github.event.repository.private == false
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d496
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/prepare-ios
+      - name: Capture native app screens with synthetic data
+        run: python3 tool/store_capture/run_capture.py
+      - name: Retain public-safe synthetic screenshots and provenance
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-store-screenshots-${{ github.run_id }}
+          path: verification/store-screenshots
+          if-no-files-found: error
+          retention-days: 7

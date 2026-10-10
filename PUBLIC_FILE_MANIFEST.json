@@ -1,6 +1,6 @@
 {
   "scope": "Exact approved-source candidate allowlist; contains no private history or signing files",
-  "fileCount": 188,
+  "fileCount": 192,
   "files": {
     ".gitattributes": {
       "bytes": 69,
@@ -14,6 +14,10 @@
       "bytes": 6367,
       "sha256": "cfbe6c6b77f8fc58f0819267626117e1a767eeb1e80e2f469776e7f53174648d"
     },
+    ".github/workflows/store-screenshots.yml": {
+      "bytes": 987,
+      "sha256": "c9a03025d5f1acd342fac69d7396fd522583e46b9f94d7ce74116a211ceda665"
+    },
     ".gitignore": {
       "bytes": 546,
       "sha256": "64e5c9063ebe3e83f89040b71295ddb489c7fdcb661c3049ce9653540a1128c0"
@@ -21,6 +25,10 @@
     ".metadata": {
       "bytes": 964,
       "sha256": "3e45ad8d071dfde0fab74482462d283cddd5ca034446e41fc9ba29233129a120"
+    },
+    "README.md": {
+      "bytes": 3464,
+      "sha256": "6ecdcd3e6d70f919f6238717c1773a7c76d193458c92f81ba268a14078ad1323"
     },
     "analysis_options.yaml": {
       "bytes": 204,
@@ -65,6 +73,38 @@
     "ios/Podfile": {
       "bytes": 1559,
       "sha256": "fd0db0a640adc636ba51c81b690e8af7897c064a73fcfa37277c9da00f0f62b2"
+    },
+    "ios/Runner.xcodeproj/project.pbxproj": {
+      "bytes": 28870,
+      "sha256": "80a497d6703c67a080f4186baf09dd370d7af6bf99425ee6b79177ef52ee6f3b"
+    },
+    "ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata": {
+      "bytes": 142,
+      "sha256": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c"
+    },
+    "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": {
+      "bytes": 246,
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
+    },
+    "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": {
+      "bytes": 234,
+      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
+    },
+    "ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme": {
+      "bytes": 4836,
+      "sha256": "a46c0d064503db8bf9f452b492c61fdf76f9febb8894005fe30b2facec21e550"
+    },
+    "ios/Runner.xcworkspace/contents.xcworkspacedata": {
+      "bytes": 159,
+      "sha256": "706a4c812f2a1e220e6785c27580020d58048e2ae4d30d1280f3c43344ce6b38"
+    },
+    "ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": {
+      "bytes": 246,
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
+    },
+    "ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": {
+      "bytes": 234,
+      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
     },
     "ios/Runner/AppDelegate.swift": {
       "bytes": 2617,
@@ -162,6 +202,22 @@
       "bytes": 1631,
       "sha256": "dcea4686c02065e56217fd19fcfb73d7509b41872e7486126149d47a18559363"
     },
+    "ios/Runner/Info.plist": {
+      "bytes": 7734,
+      "sha256": "9514e8d500d0afdfd844240df6299307028c9b0ae499b6171511df2dfd5dd722"
+    },
+    "ios/Runner/PrivacyInfo.xcprivacy": {
+      "bytes": 381,
+      "sha256": "ff5ac64cfc64b28ca6085980f0a6967e7cb36ece715045f2b4e1f0a859ccf0b5"
+    },
+    "ios/Runner/Runner-Bridging-Header.h": {
+      "bytes": 39,
+      "sha256": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7"
+    },
+    "ios/Runner/SceneDelegate.swift": {
+      "bytes": 82,
+      "sha256": "edce811c671ca0a6ccb14753e14e16deb0d89a0adf4f1b685e362d87d8f4c366"
+    },
     "ios/Runner/de.lproj/InfoPlist.strings": {
       "bytes": 242,
       "sha256": "7bb80bd3543052ce853bfb17340bd8cdbe315b899700f9a515194184250dee5b"
@@ -178,10 +234,6 @@
       "bytes": 277,
       "sha256": "5923eb60199ddf12f2ce18f806dc336f25ef813fbfa5e9623448b5b70b31205d"
     },
-    "ios/Runner/Info.plist": {
-      "bytes": 7734,
-      "sha256": "9514e8d500d0afdfd844240df6299307028c9b0ae499b6171511df2dfd5dd722"
-    },
     "ios/Runner/ja.lproj/InfoPlist.strings": {
       "bytes": 224,
       "sha256": "58289695d54cc944d259bd115e125df22eb7ec89e66899af35de3b2277cb083f"
@@ -189,50 +241,6 @@
     "ios/Runner/ko.lproj/InfoPlist.strings": {
       "bytes": 226,
       "sha256": "350e8f0ae8c642873356df7811fd760fb075c72962f58f98972f50d27dfe0ec5"
-    },
-    "ios/Runner/PrivacyInfo.xcprivacy": {
-      "bytes": 381,
-      "sha256": "ff5ac64cfc64b28ca6085980f0a6967e7cb36ece715045f2b4e1f0a859ccf0b5"
-    },
-    "ios/Runner/Runner-Bridging-Header.h": {
-      "bytes": 39,
-      "sha256": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7"
-    },
-    "ios/Runner/SceneDelegate.swift": {
-      "bytes": 82,
-      "sha256": "edce811c671ca0a6ccb14753e14e16deb0d89a0adf4f1b685e362d87d8f4c366"
-    },
-    "ios/Runner.xcodeproj/project.pbxproj": {
-      "bytes": 28870,
-      "sha256": "80a497d6703c67a080f4186baf09dd370d7af6bf99425ee6b79177ef52ee6f3b"
-    },
-    "ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata": {
-      "bytes": 142,
-      "sha256": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c"
-    },
-    "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": {
-      "bytes": 246,
-      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
-    },
-    "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": {
-      "bytes": 234,
-      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
-    },
-    "ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme": {
-      "bytes": 4836,
-      "sha256": "a46c0d064503db8bf9f452b492c61fdf76f9febb8894005fe30b2facec21e550"
-    },
-    "ios/Runner.xcworkspace/contents.xcworkspacedata": {
-      "bytes": 159,
-      "sha256": "706a4c812f2a1e220e6785c27580020d58048e2ae4d30d1280f3c43344ce6b38"
-    },
-    "ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": {
-      "bytes": 246,
-      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30"
-    },
-    "ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": {
-      "bytes": 234,
-      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
     },
     "ios/RunnerTests/RunnerTests.swift": {
       "bytes": 297,
@@ -526,10 +534,6 @@
       "bytes": 745,
       "sha256": "fb111d3bafdfb7800ceda10047aa75cb1874584b8bd0b6de4bbd72697e19c505"
     },
-    "README.md": {
-      "bytes": 3464,
-      "sha256": "6ecdcd3e6d70f919f6238717c1773a7c76d193458c92f81ba268a14078ad1323"
-    },
     "test/core/ad_policy_test.dart": {
       "bytes": 3157,
       "sha256": "2daa9b50822a10b7c98754d727e60c2a4499e8fa43d61d2c3654e6ee9d88f912"
@@ -602,6 +606,10 @@
       "bytes": 14962,
       "sha256": "865fae2ed36d92b149695655b07adeac2a7e92db1554d876345755c41e07fcde"
     },
+    "third_party/Flutter-LICENSE.txt": {
+      "bytes": 1544,
+      "sha256": "a3a9fd82f800a47377f7d3f60c60a5c91cae0495be8f329031e1448ce0f5dab9"
+    },
     "third_party/build_runner-LICENSE.txt": {
       "bytes": 1504,
       "sha256": "a4b5d7d31626e90b77e8696f1c47643aa31f52e17c1907c1ab60b068110e6e10"
@@ -621,10 +629,6 @@
     "third_party/drift_flutter-LICENSE.txt": {
       "bytes": 1069,
       "sha256": "7cf86321e740e4ff631ab6d00962c2d65fa85e4163bdd89334f1d22354ab0306"
-    },
-    "third_party/Flutter-LICENSE.txt": {
-      "bytes": 1544,
-      "sha256": "a3a9fd82f800a47377f7d3f60c60a5c91cae0495be8f329031e1448ce0f5dab9"
     },
     "third_party/flutter_lints-LICENSE.txt": {
       "bytes": 1519,
@@ -745,6 +749,18 @@
     "tool/install_iphone_adhoc.py": {
       "bytes": 5403,
       "sha256": "7988794fa9ad6a44cf1991c523901c62f9da05a24acdedfd8eb272950973eeb1"
+    },
+    "tool/store_capture/driver.dart": {
+      "bytes": 615,
+      "sha256": "c99b3de157e802f7718ce1553d67dc46b850a525699688d1953bdd6766e969a5"
+    },
+    "tool/store_capture/run_capture.py": {
+      "bytes": 3506,
+      "sha256": "7ec82b5839e4e8ad1ba0e165f02d8139e25cf21c0656d41cbbf033d1eccaa272"
+    },
+    "tool/store_capture/screenshot_test.dart": {
+      "bytes": 4197,
+      "sha256": "00391fa5794ddebc67de0b54c07b0763adee471d6479df5efe06dfe1bffc8304"
     },
     "tool/verify_manifest.py": {
       "bytes": 933,
