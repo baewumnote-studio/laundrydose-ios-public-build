@@ -15,8 +15,8 @@
       "sha256": "cfbe6c6b77f8fc58f0819267626117e1a767eeb1e80e2f469776e7f53174648d"
     },
     ".github/workflows/store-screenshots.yml": {
-      "bytes": 987,
-      "sha256": "c9a03025d5f1acd342fac69d7396fd522583e46b9f94d7ce74116a211ceda665"
+      "bytes": 985,
+      "sha256": "f18704dcb9125a700a70c64881f07f3295eb8b354960e0b6b0ca2458d022c7b8"
     },
     ".gitignore": {
       "bytes": 546,
