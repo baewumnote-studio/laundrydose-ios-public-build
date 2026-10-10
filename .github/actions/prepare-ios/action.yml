@@ -1,0 +1,43 @@
+name: Prepare reviewed Laundry Dose iOS
+description: Restore the proven SDK and locked packages, then generate and test the preserved app.
+runs:
+  using: composite
+  steps:
+    - name: Verify allowlist, preserved app and signing controls
+      shell: bash
+      run: |
+        set -euo pipefail
+        if [ -x /opt/homebrew/opt/openssl@3/bin/openssl ]; then
+          export OPENSSL_EXECUTABLE=/opt/homebrew/opt/openssl@3/bin/openssl
+        elif [ -x /usr/local/opt/openssl@3/bin/openssl ]; then
+          export OPENSSL_EXECUTABLE=/usr/local/opt/openssl@3/bin/openssl
+        else
+          openssl version | grep -E '^OpenSSL 3\.'
+        fi
+        echo "OPENSSL_EXECUTABLE=${OPENSSL_EXECUTABLE:-openssl}" >> "$GITHUB_ENV"
+        python3 tool/verify_manifest.py
+        python3 tool/ci/check_preserved_app.py
+        python3 -m unittest discover -s tool/ci -p 'test_*.py'
+        sudo xcode-select --switch /Applications/Xcode_26.6.app/Contents/Developer
+        xcodebuild -version
+    - name: Install pinned official Flutter SDK
+      shell: bash
+      run: |
+        set -euo pipefail
+        sdk_path="$RUNNER_TEMP/laundry-dose-flutter"
+        git clone --depth 1 --branch 3.47.5 https://github.com/flutter/flutter.git "$sdk_path"
+        test "$(git -C "$sdk_path" rev-parse HEAD)" = "6a19cca56475dbfba1478ee68d7bd0c2ef891da1"
+        echo "$sdk_path/bin" >> "$GITHUB_PATH"
+        "$sdk_path/bin/flutter" config --no-analytics
+        "$sdk_path/bin/flutter" precache --ios
+    - name: Generate and verify app with locked dependencies
+      shell: bash
+      run: |
+        set -euo pipefail
+        flutter pub get --enforce-lockfile
+        dart run build_runner build
+        flutter gen-l10n
+        flutter analyze --no-pub
+        flutter test --no-pub --dart-define=LAUNDRY_DOSE_TEST_ADS=true
+        printf '%s\n' 'GAD_APPLICATION_IDENTIFIER=ca-app-pub-3940256099942544~1458002511' > ios/Flutter/Deployment.release.xcconfig
+        mkdir -p verification

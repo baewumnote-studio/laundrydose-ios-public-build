@@ -1,0 +1,5 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Generated.xcconfig"
+
+// Google official sample AdMob iOS app ID for development/test builds.
+GAD_APPLICATION_IDENTIFIER=ca-app-pub-3940256099942544~1458002511

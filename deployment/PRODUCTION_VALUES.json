@@ -1,0 +1,11 @@
+{
+  "ios_bundle_id": "com.healthmanagementprepare.laundrydose",
+  "ios_deployment_target": "15.0",
+  "admob_app_id_ios": "ca-app-pub-9507165963073699~3173377027",
+  "admob_interstitial_id_ios": "ca-app-pub-9507165963073699/6572642545",
+  "marketing_url": "https://laundry-dose-support.kjo25400.chatgpt.site",
+  "privacy_policy_url": "https://laundry-dose-support.kjo25400.chatgpt.site/privacy.html",
+  "support_url": "https://laundry-dose-support.kjo25400.chatgpt.site/support.html",
+  "support_email": "healthmanagementprepare@gmail.com",
+  "app_store_id": "6820179086"
+}
