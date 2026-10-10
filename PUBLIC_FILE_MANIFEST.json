@@ -755,8 +755,8 @@
       "sha256": "c99b3de157e802f7718ce1553d67dc46b850a525699688d1953bdd6766e969a5"
     },
     "tool/store_capture/run_capture.py": {
-      "bytes": 5616,
-      "sha256": "ec1f45134aed84d60d1c5038592840e491c5ed9c5773a040303fabed49a75950"
+      "bytes": 7995,
+      "sha256": "a8a5f35c87368b99671dc2e1567585c4c0325c19f3b335e3d7fbd468a19da53d"
     },
     "tool/store_capture/screenshot_test.dart.template": {
       "bytes": 4197,

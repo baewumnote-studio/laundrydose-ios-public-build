@@ -1,12 +1,54 @@
 """Capture native Simulator PNGs using only isolated synthetic app data."""
-import hashlib,json,os,signal
+import hashlib,json,os,re,signal,time
 from pathlib import Path
 import shutil,struct,subprocess
+from urllib.parse import urlparse
 
 ROOT=Path.cwd()
 OUT=ROOT/'verification/store-screenshots'
 OUT.mkdir(parents=True,exist_ok=True)
 def run(args,**kw): return subprocess.run(args,check=True,**kw)
+
+def failure_evidence(device,label):
+    diagnostics=OUT/(label+'-diagnostics');diagnostics.mkdir(exist_ok=True)
+    subprocess.run(['xcrun','simctl','io',device['udid'],'screenshot',
+        str(diagnostics/'current-simulator-screen.png')],timeout=45,check=False)
+    result=subprocess.run(['xcrun','simctl','spawn',device['udid'],'log','show',
+        '--last','10m','--style','compact','--predicate','process == "Runner"'],
+        timeout=60,check=False,capture_output=True,text=True)
+    (diagnostics/'runner-native.log').write_text(result.stdout+result.stderr)
+
+def service_uri(log):
+    matches=re.findall(r'The Dart VM service is listening on (http://[^\s]+)',log)
+    if not matches: return None
+    uri=matches[-1];parsed=urlparse(uri)
+    if (parsed.scheme!='http' or parsed.hostname!='127.0.0.1' or not parsed.port
+        or parsed.username or parsed.password or parsed.query or parsed.fragment
+        or not re.fullmatch(r'/[A-Za-z0-9_=-]+/',parsed.path)):
+        raise ValueError('Native capture must use the authenticated local Simulator service.')
+    return uri
+
+def launch_service(device,binary):
+    run(['xcrun','simctl','install',device['udid'],str(binary)],timeout=90)
+    result=run(['xcrun','simctl','launch',device['udid'],
+        'com.healthmanagementprepare.laundrydose','--enable-dart-profiling',
+        '--disable-vm-service-publication','--start-paused',
+        '--enable-checked-mode','--verify-entry-points'],
+        capture_output=True,text=True,timeout=45)
+    match=re.search(r'com\.healthmanagementprepare\.laundrydose:\s*(\d+)',result.stdout)
+    if not match: raise ValueError('Native Simulator launch did not return its actual process.')
+    # Flutter's live log reader can miss the startup message on a CI Simulator.
+    # Historical logs for this exact newly launched process preserve that message.
+    predicate='processID == '+match[1]+' AND eventMessage CONTAINS "The Dart VM service is listening on"'
+    deadline=time.monotonic()+90
+    while time.monotonic()<deadline:
+        result=run(['xcrun','simctl','spawn',device['udid'],'log','show',
+            '--last','2m','--info','--debug','--style','compact',
+            '--predicate',predicate],capture_output=True,text=True,timeout=20)
+        uri=service_uri(result.stdout)
+        if uri: return uri
+        time.sleep(1)
+    raise ValueError('The actual Simulator service was not found within the bounded launch time.')
 
 def drive(args,source,env,device,label,timeout):
     # Bound a stalled Simulator launch and retain actual evidence from this
@@ -25,13 +67,7 @@ def drive(args,source,env,device,label,timeout):
             code=-1
     print(log.read_text(),flush=True)
     if code:
-        diagnostics=OUT/(label+'-diagnostics');diagnostics.mkdir(exist_ok=True)
-        subprocess.run(['xcrun','simctl','io',device['udid'],'screenshot',
-            str(diagnostics/'current-simulator-screen.png')],timeout=45,check=False)
-        result=subprocess.run(['xcrun','simctl','spawn',device['udid'],'log','show',
-            '--last','10m','--style','compact','--predicate','process == "Runner"'],
-            timeout=60,check=False,capture_output=True,text=True)
-        (diagnostics/'runner-native.log').write_text(result.stdout+result.stderr)
+        failure_evidence(device,label)
         raise ValueError(label+' native capture failed or launch timed out; actual Simulator evidence retained.')
     log.unlink()
 
@@ -54,6 +90,13 @@ def capture():
     if not phone or not tablet: raise ValueError('A supported medium Dynamic Island iPhone and 13-inch iPad Simulator are required.')
     receipt={'sourceCommit':os.environ['GITHUB_SHA'],'captureType':'NATIVE_IOS_SIMULATOR',
         'syntheticDataOnly':True,'shippingAppSourceUnchanged':True,'runtimeVersion':runtime['version'],'devices':[]}
+    # Build the same isolated harness once, then launch it explicitly on each
+    # native device. Neither the production entrypoint nor signing is changed.
+    run(['flutter','build','ios','--debug','--simulator',
+        '--target=tool/store_capture/screenshot_test.dart',
+        '--dart-define=LAUNDRY_DOSE_TEST_ADS=true'],cwd=source,timeout=900)
+    binary=source/'build/ios/iphonesimulator/Runner.app'
+    if not binary.is_dir(): raise ValueError('The native capture application was not built.')
     for label,device in [('iphone',phone),('ipad',tablet)]:
         if device['state']!='Booted': run(['xcrun','simctl','boot',device['udid']])
         run(['xcrun','simctl','bootstatus',device['udid'],'-b'])
@@ -61,14 +104,15 @@ def capture():
             '--batteryState','charged','--batteryLevel','100','--wifiMode','active','--wifiBars','3'])
         folder=OUT/label
         env=os.environ|{'STORE_CAPTURE_OUTPUT':str(folder)}
+        try: uri=launch_service(device,binary)
+        except Exception:
+            failure_evidence(device,label)
+            raise
+        print(label+' native service recovered from the actual launch log.',flush=True)
         command=['flutter','drive','--verbose','--driver=tool/store_capture/driver.dart',
             '--target=tool/store_capture/screenshot_test.dart','-d',device['udid'],
-            '--dart-define=LAUNDRY_DOSE_TEST_ADS=true']
-        if label=='ipad':
-            binary=source/'build/ios/iphonesimulator/Runner.app'
-            if not binary.is_dir(): raise ValueError('Reuse requires the successfully built synthetic capture app.')
-            command.append('--use-application-binary='+str(binary))
-        drive(command,source,env,device,label,720 if label=='iphone' else 300)
+            '--use-existing-app='+uri,'--no-keep-app-running']
+        drive(command,source,env,device,label,300)
         files=[]
         for path in sorted(folder.glob('*.png')):
             data=path.read_bytes()
